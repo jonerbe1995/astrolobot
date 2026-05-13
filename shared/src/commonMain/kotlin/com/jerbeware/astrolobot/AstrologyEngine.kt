@@ -1,48 +1,36 @@
-package com.jerbeware.astrolobot.shared
+package com.jerbeware.astrolobot
 
-import kotlinx.datetime.*
-import kotlin.math.floor
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.Month
 
 object AstrologyEngine {
-
     fun getSunSign(date: LocalDate): String {
-        val day = date.dayOfMonth
-        return when (date.monthNumber) {
-            1 -> if (day < 20) "Capricorn" else "Aquarius"
-            2 -> if (day < 19) "Aquarius" else "Pisces"
-            3 -> if (day < 21) "Pisces" else "Aries"
-            4 -> if (day < 20) "Aries" else "Taurus"
-            5 -> if (day < 21) "Taurus" else "Gemini"
-            6 -> if (day < 21) "Gemini" else "Cancer"
-            7 -> if (day < 23) "Cancer" else "Leo"
-            8 -> if (day < 23) "Leo" else "Virgo"
-            9 -> if (day < 23) "Virgo" else "Libra"
-            10 -> if (day < 23) "Libra" else "Scorpio"
-            11 -> if (day < 22) "Scorpio" else "Sagittarius"
-            12 -> if (day < 22) "Sagittarius" else "Capricorn"
+        return when (date.month) {
+            Month.JANUARY -> if (date.dayOfMonth <= 19) "Capricorn" else "Aquarius"
+            Month.FEBRUARY -> if (date.dayOfMonth <= 18) "Aquarius" else "Pisces"
+            Month.MARCH -> if (date.dayOfMonth <= 20) "Pisces" else "Aries"
+            Month.APRIL -> if (date.dayOfMonth <= 19) "Aries" else "Taurus"
+            Month.MAY -> if (date.dayOfMonth <= 20) "Taurus" else "Gemini"
+            Month.JUNE -> if (date.dayOfMonth <= 20) "Gemini" else "Cancer"
+            Month.JULY -> if (date.dayOfMonth <= 22) "Cancer" else "Leo"
+            Month.AUGUST -> if (date.dayOfMonth <= 22) "Leo" else "Virgo"
+            Month.SEPTEMBER -> if (date.dayOfMonth <= 22) "Virgo" else "Libra"
+            Month.OCTOBER -> if (date.dayOfMonth <= 22) "Libra" else "Scorpio"
+            Month.NOVEMBER -> if (date.dayOfMonth <= 21) "Scorpio" else "Sagittarius"
+            Month.DECEMBER -> if (date.dayOfMonth <= 21) "Sagittarius" else "Capricorn"
             else -> "Unknown"
         }
     }
 
-    /**
-     * Simplified Ascendant Calculation for MVP
-     */
+    // A simplified MVP calculation for the Rising sign (Ascendant)
     fun calculateRisingSign(hour: Int, minute: Int, longitude: Double): String {
-        // Rough estimate of Sidereal Time at 00:00 local
-        // In a full app, this would use a Julian Date calculation
-        val timeInHours = hour + (minute / 60.0)
+        // In a real app, we'd use complex sidereal time math.
+        // For the MVP "Astrolobot" parody, we'll use a simplified 2-hour window logic.
+        val signs = listOf("Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
+                           "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces")
         
-        // Adjust for longitude (15 degrees per hour)
-        var lst = (timeInHours + (longitude / 15.0)) % 24
-        if (lst < 0) lst += 24
-
-        val signs = listOf(
-            "Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo", 
-            "Libra", "Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"
-        )
-        
-        // Map the 24-hour cycle to the 12 signs (approx 2 hours per sign)
-        val index = (floor(lst / 2.0).toInt()) % 12
+        // This is a placeholder for the actual complex calculation
+        val index = (hour / 2) % 12
         return signs[index]
     }
 }

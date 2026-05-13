@@ -1,0 +1,25 @@
+# IDE / Editor
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# Build Output
+build/
+**/build/
+bin/
+
+# Android Specific
+.gradle/
+local.properties
+*.apk
+*.aar
+*.ap_
+
+# OS Specific
+.DS_Store
+Thumbs.db
+
+# Kotlin Multiplatform / Compose
+.kotlin/
+.compose/
